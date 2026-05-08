@@ -33,13 +33,13 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.kura.comm.CommConnection;
+import org.eclipse.kura.comm.CommConnectionFactory;
 import org.eclipse.kura.comm.CommURI;
 import org.eclipse.kura.linux.position.provider.LockStatusListener;
 import org.eclipse.kura.linux.position.serial.GpsDevice;
 import org.eclipse.kura.position.NmeaPosition;
 import org.eclipse.kura.position.PositionException;
 import org.junit.Test;
-import org.osgi.service.io.ConnectionFactory;
 
 public class GpsDeviceTest implements LockStatusListener {
 
@@ -87,8 +87,8 @@ public class GpsDeviceTest implements LockStatusListener {
         CommConnection connMock = mock(CommConnection.class);
         when(connMock.openInputStream()).thenReturn(null);
 
-        ConnectionFactory connFactoryMock = mock(ConnectionFactory.class);
-        when(connFactoryMock.createConnection(anyString(), eq(1), eq(false))).thenReturn(connMock);
+        CommConnectionFactory connFactoryMock = mock(CommConnectionFactory.class);
+        when(connFactoryMock.createConnection(any(CommURI.class))).thenReturn(connMock);
 
         gps = new GpsDevice(connFactoryMock, commUri, this);
     }
@@ -108,8 +108,8 @@ public class GpsDeviceTest implements LockStatusListener {
         CommConnection connMock = mock(CommConnection.class);
         when(connMock.openInputStream()).thenReturn(is);
 
-        ConnectionFactory connFactoryMock = mock(ConnectionFactory.class);
-        when(connFactoryMock.createConnection(anyString(), eq(1), eq(false))).thenReturn(connMock);
+        CommConnectionFactory connFactoryMock = mock(CommConnectionFactory.class);
+        when(connFactoryMock.createConnection(any(CommURI.class))).thenReturn(connMock);
 
         gps = new GpsDevice(connFactoryMock, commUri, this);
 
@@ -129,8 +129,8 @@ public class GpsDeviceTest implements LockStatusListener {
         CommConnection connMock = mock(CommConnection.class);
         when(connMock.openInputStream()).thenReturn(is);
 
-        ConnectionFactory connFactoryMock = mock(ConnectionFactory.class);
-        when(connFactoryMock.createConnection(anyString(), eq(1), eq(false))).thenReturn(connMock);
+        CommConnectionFactory connFactoryMock = mock(CommConnectionFactory.class);
+        when(connFactoryMock.createConnection(any(CommURI.class))).thenReturn(connMock);
 
         gps = new GpsDevice(connFactoryMock, commUri, this);
         gps.disconnect();
@@ -159,8 +159,8 @@ public class GpsDeviceTest implements LockStatusListener {
         CommConnection connMock = mock(CommConnection.class);
         when(connMock.openInputStream()).thenReturn(is);
 
-        ConnectionFactory connFactoryMock = mock(ConnectionFactory.class);
-        when(connFactoryMock.createConnection(anyString(), eq(1), eq(false))).thenReturn(connMock);
+        CommConnectionFactory connFactoryMock = mock(CommConnectionFactory.class);
+        when(connFactoryMock.createConnection(any(CommURI.class))).thenReturn(connMock);
 
         gps = new GpsDevice(connFactoryMock, commUri, this);
 

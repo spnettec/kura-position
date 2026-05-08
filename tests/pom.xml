@@ -211,7 +211,7 @@
                                 <goal>test</goal>
                             </goals>
                             <configuration>
-                                <argLine>${tycho.testArgLine}</argLine>
+                                <argLine>${tycho.testArgLine} -Dnet.bytebuddy.experimental=true</argLine>
                             </configuration>
                         </execution>
                     </executions>

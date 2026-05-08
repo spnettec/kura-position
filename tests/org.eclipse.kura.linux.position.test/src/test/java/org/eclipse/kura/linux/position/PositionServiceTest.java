@@ -30,7 +30,6 @@ import static org.mockito.Mockito.when;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -39,6 +38,7 @@ import java.util.Set;
 
 import org.eclipse.kura.KuraException;
 import org.eclipse.kura.comm.CommConnection;
+import org.eclipse.kura.comm.CommConnectionFactory;
 import org.eclipse.kura.comm.CommURI;
 import org.eclipse.kura.linux.position.serial.GpsDevice;
 import org.eclipse.kura.linux.position.serial.GpsDeviceTracker;
@@ -53,7 +53,6 @@ import org.junit.Test;
 import org.mockito.ArgumentMatcher;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
-import org.osgi.service.io.ConnectionFactory;
 import org.osgi.util.position.Position;
 
 public class PositionServiceTest {
@@ -87,7 +86,7 @@ public class PositionServiceTest {
             return this.positionProvider.getGpsDevice();
         }
 
-        public ConnectionFactory getConnectionFactory() {
+        public CommConnectionFactory getConnectionFactory() {
             return this.positionProvider.getConnectionFactory();
         }
 
@@ -106,10 +105,10 @@ public class PositionServiceTest {
         return tracker;
     }
 
-    private static ConnectionFactory getMockConnectionFactory(final String nmeaStrings) throws IOException {
-        ConnectionFactory connFactoryMock = mock(ConnectionFactory.class);
+    private static CommConnectionFactory getMockConnectionFactory(final String nmeaStrings) throws IOException {
+        CommConnectionFactory connFactoryMock = mock(CommConnectionFactory.class);
         CommConnection connMock = mock(CommConnection.class);
-        when(connFactoryMock.createConnection(anyString(), eq(1), eq(false))).thenReturn(connMock);
+        when(connFactoryMock.createConnection(any(CommURI.class))).thenReturn(connMock);
 
         InputStream is = new ByteArrayInputStream(nmeaStrings.getBytes());
         when(connMock.openInputStream()).thenReturn(is);
@@ -122,7 +121,7 @@ public class PositionServiceTest {
         final SerialDevicePositionProvider serialDevicePositionProvider = new SerialDevicePositionProvider();
 
         GpsDeviceTracker mockGpsDeviceTracker = getMockGpsDeviceTracker();
-        ConnectionFactory mockConnectionFactory = getMockConnectionFactory(nmeaStrings);
+        CommConnectionFactory mockConnectionFactory = getMockConnectionFactory(nmeaStrings);
         ModemGpsStatusTracker mockModemGpsStatustracker = mock(ModemGpsStatusTracker.class);
 
         serialDevicePositionProvider.setGpsDeviceTracker(mockGpsDeviceTracker);
@@ -147,42 +146,16 @@ public class PositionServiceTest {
         return properties;
     }
 
-    private static final class UriMatcher implements ArgumentMatcher<String> {
-
-        private final CommURI uri;
-
-        public UriMatcher(final CommURI uri) {
-            this.uri = uri;
-        }
-
-        @Override
-        public boolean matches(String argument) {
-            final String port = argument;
-
-            try {
-                final CommURI argUri = CommURI.parseString(port);
-
-                assertEquals(uri.getPort(), argUri.getPort());
-                assertEquals(uri.getBaudRate(), argUri.getBaudRate());
-                assertEquals(uri.getStopBits(), argUri.getStopBits());
-                assertEquals(uri.getDataBits(), argUri.getDataBits());
-                assertEquals(uri.getParity(), argUri.getParity());
-                assertEquals(uri.getFlowControl(), argUri.getFlowControl());
-                assertEquals(2000, argUri.getOpenTimeout());
-                assertEquals(2000, argUri.getReceiveTimeout());
-
-                return true;
-            } catch (URISyntaxException e) {
-                fail("Provided uri syntax must be correct");
-            }
-
-            return false;
-        }
-
-    }
-
-    private static UriMatcher isUri(final CommURI uri) {
-        return new UriMatcher(uri);
+    private static ArgumentMatcher<CommURI> isUri(final CommURI uri) {
+        return arg -> {
+            assertEquals(uri.getPort(), arg.getPort());
+            assertEquals(uri.getBaudRate(), arg.getBaudRate());
+            assertEquals(uri.getStopBits(), arg.getStopBits());
+            assertEquals(uri.getDataBits(), arg.getDataBits());
+            assertEquals(uri.getParity(), arg.getParity());
+            assertEquals(uri.getFlowControl(), arg.getFlowControl());
+            return true;
+        };
     }
 
     private static final ArgumentMatcher<Event> isPositionLockedEvent = new ArgumentMatcher<Event>() {
@@ -360,7 +333,12 @@ public class PositionServiceTest {
         final GpsDevice device = fixture.getGpsDevice();
         assertNotNull(device);
 
-        verify(fixture.getConnectionFactory(), times(1)).createConnection(argThat(isUri(defaultURI)), eq(1), eq(false));
+        verify(fixture.getConnectionFactory(), times(1)).createConnection(argThat(uri ->
+            defaultURI.getPort().equals(uri.getPort()) &&
+            defaultURI.getBaudRate() == uri.getBaudRate() &&
+            defaultURI.getStopBits() == uri.getStopBits() &&
+            defaultURI.getDataBits() == uri.getDataBits()
+        ));
         assertEquals("port", device.getCommURI().getPort());
 
         fixture.ps.deactivate();
@@ -385,7 +363,13 @@ public class PositionServiceTest {
         assertEquals(0.0, fixture.ps.getPosition().getAltitude().getValue(), EPS);
 
         assertNotNull(fixture.getGpsDevice());
-        verify(fixture.getConnectionFactory(), times(1)).createConnection(argThat(isUri(modemUri)), eq(1), eq(false));
+        verify(fixture.getConnectionFactory(), times(1)).createConnection(argThat(uri ->
+            modemUri.getPort().equals(uri.getPort()) &&
+            modemUri.getBaudRate() == uri.getBaudRate() &&
+            modemUri.getStopBits() == uri.getStopBits() &&
+            modemUri.getDataBits() == uri.getDataBits() &&
+            modemUri.getParity() == uri.getParity()
+        ));
 
         fixture.ps.deactivate();
     }
