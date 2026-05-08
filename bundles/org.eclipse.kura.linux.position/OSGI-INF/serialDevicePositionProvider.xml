@@ -24,3 +24,7 @@
    <reference bind="setGpsDeviceTracker" cardinality="1..1" interface="org.eclipse.kura.linux.position.serial.GpsDeviceTracker" name="GpsDeviceTracker" policy="static" unbind="unsetGpsDeviceTracker"/>
    <reference bind="setConnectionFactory" cardinality="1..1" interface="org.osgi.service.io.ConnectionFactory" name="ConnectionFactory" policy="static" unbind="unsetConnectionFactory"/>   
 </scr:component>
+
+
+  
+
