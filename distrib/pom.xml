@@ -62,9 +62,9 @@
             n => bundle.name:@n;
             ns => bundle.name:@n:start;
         -->
-        <position.addon.installation.dir>/opt/eclipse/kura/plugins/4s</position.addon.installation.dir>
-        <rest.position.addon.installation.dir>/opt/eclipse/kura/plugins/4s</rest.position.addon.installation.dir>
-        <gpsd4java.installation.dir>/opt/eclipse/kura/plugins/3</gpsd4java.installation.dir>
+        <position.addon.installation.dir>/opt/eclipse/kura/siblings/position/4s</position.addon.installation.dir>
+        <rest.position.addon.installation.dir>/opt/eclipse/kura/siblings/position/4s</rest.position.addon.installation.dir>
+        <gpsd4java.installation.dir>/opt/eclipse/kura/siblings/position/3</gpsd4java.installation.dir>
 
         <!-- name of the JAR produced in bundles/target -->
         <position.jar.name>org.eclipse.kura.linux.position-2.0.0-SNAPSHOT.jar</position.jar.name>
