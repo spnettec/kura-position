@@ -25,19 +25,6 @@
     <packaging>pom</packaging>
     <name>Kura Position PDE Deps</name>
 
-    <distributionManagement>
-        <repository>
-            <id>repo.eclipse.org</id>
-            <name>Kura Repository - Releases</name>
-            <url>https://repo.eclipse.org/content/repositories/kura-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>repo.eclipse.org</id>
-            <name>Kura Repository - Snapshots</name>
-            <url>https://repo.eclipse.org/content/repositories/kura-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <dependencyManagement>
         <dependencies>        <!-- Demo bundles -->
             <dependency>
