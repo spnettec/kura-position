@@ -273,6 +273,29 @@
                                     </mapper>
                                 </data>
 
+                                <!-- .data scripts for postinst/postrm -->
+                                <data>
+                                    <src>${project.basedir}/src/main/resources/scripts/kura_position_install.sh</src>
+                                    <type>file</type>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/opt/eclipse/kura/.data</prefix>
+                                        <user>kurad</user>
+                                        <group>kurad</group>
+                                        <filemode>755</filemode>
+                                    </mapper>
+                                </data>
+                                <data>
+                                    <src>${project.basedir}/src/main/resources/scripts/kura_position_uninstall.sh</src>
+                                    <type>file</type>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/opt/eclipse/kura/.data</prefix>
+                                        <user>kurad</user>
+                                        <group>kurad</group>
+                                        <filemode>755</filemode>
+                                    </mapper>
+                                </data>
                             </dataSet>
                         </configuration>
                     </execution>
