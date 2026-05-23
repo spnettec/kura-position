@@ -25,34 +25,11 @@
     <packaging>pom</packaging>
     <name>Kura Position PDE Deps</name>
 
-    <dependencyManagement>
-        <dependencies>        <!-- Demo bundles -->
-            <dependency>
-                <groupId>org.eclipse.kura</groupId>
-                <artifactId>org.eclipse.kura.linux.position</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.eclipse.kura</groupId>
-                <artifactId>org.eclipse.kura.rest.position.provider</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
+    <!-- Eclipse-IDE-only delta: developers add this pom as a Maven Artifact
+         Target Entry on top of the monorepo target so de.taimos.gpsd4java.*
+         imports resolve. The Tycho build resolves gpsd4java via
+         target-definition/kura-position.target instead. -->
     <dependencies>
-        <dependency>
-            <groupId>org.eclipse.kura</groupId>
-            <artifactId>org.eclipse.kura.linux.position</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.kura</groupId>
-            <artifactId>org.eclipse.kura.rest.position.provider</artifactId>
-        </dependency>
-        <!-- Eclipse-IDE-only: lets developers add this pom as a Maven Artifact
-             Target Entry on top of the monorepo target so de.taimos.gpsd4java.*
-             imports resolve. The Tycho build resolves gpsd4java via
-             target-definition/kura-position.target instead. -->
         <dependency>
             <groupId>com.eurotech</groupId>
             <artifactId>gpsd4java</artifactId>
