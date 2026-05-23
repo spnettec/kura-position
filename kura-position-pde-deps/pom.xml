@@ -49,7 +49,24 @@
             <groupId>org.eclipse.kura</groupId>
             <artifactId>org.eclipse.kura.rest.position.provider</artifactId>
         </dependency>
+        <!-- Eclipse-IDE-only: lets developers add this pom as a Maven Artifact
+             Target Entry on top of the monorepo target so de.taimos.gpsd4java.*
+             imports resolve. The Tycho build resolves gpsd4java via
+             target-definition/kura-position.target instead. -->
+        <dependency>
+            <groupId>com.eurotech</groupId>
+            <artifactId>gpsd4java</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>kura-addons</id>
+            <name>Kura Addons Maven Repository</name>
+            <url>https://raw.githubusercontent.com/eurotech/kura_addons/mvn-repo</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
