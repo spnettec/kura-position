@@ -1,0 +1,7 @@
+{"class":"VERSION","release":"3.22","rev":"3.22","proto_major":3,"proto_minor":14}
+{"class":"DEVICES","devices":[{"class":"DEVICE","path":"/dev/pts/5","activated":"2025-12-04T16:56:13.766Z","native":0,"bps":4800,"parity":"N","stopbits":1,"cycle":1.00},{"class":"DEVICE","path":"/dev/pts/6","activated":"2025-12-04T16:56:14.766Z","native":0,"bps":4800,"parity":"N","stopbits":1,"cycle":1.00}]}
+{"class":"WATCH","enable":true,"json":true,"nmea":false,"raw":0,"scaled":false,"timing":false,"split24":false,"pps":false}
+{"class":"DEVICE","path":"/dev/pts/5","driver":"NMEA0183","activated":"2025-12-04T16:56:15.253Z","native":0,"bps":4800,"parity":"N","stopbits":1,"cycle":1.00}
+{"class":"DEVICE","path":"/dev/pts/6","driver":"NMEA0183","activated":"2025-12-04T16:56:16.253Z","native":0,"bps":4800,"parity":"N","stopbits":1,"cycle":1.00}
+{"class":"TPV","device":"/dev/pts/5","mode":1}
+{"class":"TPV","device":"/dev/pts/6","mode":3,"time":"2025-12-01T12:37:05.618Z","ept":0.005,"lat":41.828250000,"lon":12.268816667,"epv":23.000,"track":354.8000,"magtrack":357.9971,"magvar":3.2,"speed":500.040,"geoidSep":44.295,"eph":19.000,"sep":19.000}
