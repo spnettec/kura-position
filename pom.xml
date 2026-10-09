@@ -46,7 +46,6 @@
         <module>bundles</module>
         <module>distrib</module>
         <module>dp</module>
-        <module>tests</module>
         <module>kura-position-pde-deps</module>
     </modules>
 </project>
